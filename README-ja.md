@@ -9,14 +9,18 @@ LaTeX: 段落頭の開き括弧類の位置の自動調整
 ### 対応環境
 
   - TeX フォーマット： LaTeX
-  - TeX エンジン： pTeX／upTeX／LuaTeX／XeTeX
-  - 依存パッケージ： bxtoolbox（BXbase バンドル）
+  - TeX エンジン： pTeX／upTeX／LuaTeX（＋LuaTeX-ja）
+  - 依存パッケージ： bxtoolbox（[BXbase] バンドル）
+
+[BXbase]: https://www.ctan.org/pkg/bxbase
 
 ### インストール
 
 TDS 1.1 に準拠するシステムの場合、以下のようにファイルを移動する：
 
   - *.sty      →  $TEXMF/tex/latex/BXjaprnind
+
+この後必要に応じて mktexlsr を実行する。
 
 ### ライセンス
 
