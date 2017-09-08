@@ -3,7 +3,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{bxjaprnind}[2013/05/05 v0.3a]
+\ProvidesPackage{bxjaprnind}[2017/09/12 v0.3b]
 
 \def\bxpi@pkgname{bxjaprnind}
 \def\bxpi@error{\PackageError\bxpi@pkgname}
@@ -109,6 +109,8 @@
 \newbool{bxpi@forceind}
 %% \bxpi@choice
 \let\bxpi@choice\relax
+%% \bxpi@special
+\let\bxpi@special\relax
 
 %%<*> \useparheadparenindent
 \bxNewrobustcmd*{\useparheadparenindent}{
@@ -165,6 +167,7 @@
   \bxpi@prnindtrue
   \bxpi@forceindfalse
   \let\bxpi@choice=m
+  \let\bxpi@special\relax
   \kernel@ifnextchar[{
     \bxpi@prnind@a
   }{%else
@@ -185,6 +188,7 @@
   \bxpi@forceindfalse
   \let\bxpi@choice=l
   \let\bxpi@value\bxpi@linehead
+  \let\bxpi@special\relax
 }
 
 %% \bxpi@parse@arg{<str>}
@@ -234,6 +238,19 @@
   \bxpi@forceindfalse
   \let\bxpi@choice=p
   \let\bxpi@value\bxpi@parhead
+  \let\bxpi@special\relax
+  \futurelet\bxpi@tok\bxpi@par@hook@a
+}
+\def\bxpi@par@hook@a{
+  \bxIfx{\bxpi@tok\special}{
+    \bxpi@par@hook@b
+  }{%else
+    \bxpi@paren@indent
+  }
+}
+\def\bxpi@par@hook@b#1#2{
+  \def\bxpi@special{#2}
+\bxDebug{special:#2}
   \bxpi@paren@indent
 }
 
@@ -250,6 +267,7 @@
   \ifbool{bxpi@prnind}{
     \futurelet\bxpi@tok\bxpi@prnindent@a
   }{%else
+    \bxpi@put@special
     \ignorespaces
   }
 }
@@ -262,6 +280,7 @@
   }{\bxIfCharToken\bxpi@tok{
     \bxpi@prnindent@b
   }{%else
+    \bxpi@put@special
     \ignorespaces
   }}
 }
@@ -280,6 +299,7 @@
     \fi
     \bxpi@prnindent@c
   }
+  \bxpi@put@special
   #1
 }
 \def\bxpi@prnindent@c{
@@ -290,6 +310,15 @@
   \kern\bxpi@value\bxpi@dima
 \bxDebug{parind:\bxpi@value}
   \bxpi@inhibitglue
+}
+
+%% \bxpi@put@special
+\def\bxpi@put@special{
+  \ifx\bxpi@special\relax\else
+\bxDebug{put-special:}
+    \special{\bxpi@special}
+    \let\bxpi@special\relax
+  \fi
 }
 
 %% \bxpi@if@open@paren
