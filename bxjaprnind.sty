@@ -1,16 +1,17 @@
-%
-% bxjaprnind.sty
-%
+%%
+%% This is file 'bxjaprnind.sty'.
+%% 
+%% Copyright (c) 2012-2021 Takayuki YATO (aka. "ZR")
+%%   GitHub:   https://github.com/zr-tex8r
+%%   Twitter:  @zr_tex8r
+%%
+%% This package is distributed under the MIT License.
+%%
 
+%% package declaration
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{bxjaprnind}[2017/09/12 v0.3b]
-
 \def\bxpi@pkgname{bxjaprnind}
-\def\bxpi@error{\PackageError\bxpi@pkgname}
-\def\bxpi@warn{\PackageWarning\bxpi@pkgname}
-
-%% definitions
-\newdimen\bxpi@dima
 
 %% code guards
 \edef\bxpi@restore@codes{%
@@ -26,19 +27,26 @@
 \bxpi@restore@codes
 \undef\bxpi@restore@codes}
 
-%------------------- setting the everypar hook
+%--------------------------------------- prologue
 
+%% packages
 \RequirePackage{bxtoolbox}
 
+%% variables
+\newbool{bxpi@everyhook}
+\newdimen\bxpi@dima
+
+%--------------------------------------- set the paragraph hook
+
 %% Checks if everyhook package is available
-\@tempswafalse
+\bxpi@everyhookfalse
 \ifbxineTeX
   \IfFileExists{everyhook.sty}{%
-    \@tempswatrue
+    \bxpi@everyhooktrue
   }{}
 \fi
 
-\if@tempswa
+\ifbxpi@everyhook
   % if everyhook is available...
   \RequirePackage{everyhook}[2011/02/04]
 
@@ -55,7 +63,7 @@
 
 \fi
 \endlinechar=-1 %
-%------------------- setting the newline hook
+%--------------------------------------- the newline hook
 
 %% adds hooks to (subcommands of) \\
 \preto\@xnewline{\bxpi@init@param}
@@ -75,38 +83,39 @@
   \bxpi@next
 \endgroup
 
-%------------------- helpers
+%--------------------------------------- helpers
 
 %% \bxpi@inhibitglue
 \ifdef\inhibitglue{
   \let\bxpi@inhibitglue\inhibitglue
 }{%else
   \let\bxpi@inhibitglue\relax
-  \bxpi@warn{
-    \string\inhibitglue\space unavailable in current settings;
-    \MessageBreak the package may not work properly
+  \PackageWarningNoLine\bxpi@pkgname{
+    Command \string\inhibitglue\space
+    unavailable in current settings;\MessageBreak
+    the package may not work properly
   }
 }
 
-%------------------- main
+%--------------------------------------- main
 
-%% \def\bxpi@parhead
+%% \bxpi@parhead
 \def\bxpi@parhead{0}
-%% \def\bxpi@linehead
+%% \bxpi@linehead
 \def\bxpi@linehead{0}
-%% \def\bxpi@dialogue
+%% \bxpi@dialogue
 \def\bxpi@dialogue{0.5}
-%% \def\bxpi@lineheadforce
+%% \bxpi@lineheadforce
 \def\bxpi@lineheadforce{1}
-%% \ifbxpi@d@parprnind
+%% switch bxpi@d@parprnind
 \newbool{bxpi@d@parprnind}\bxpi@d@parprnindtrue
-%% \ifbxpi@d@lineprnind
+%% switch bxpi@d@lineprnind
 \newbool{bxpi@d@lineprnind}\bxpi@d@lineprnindtrue
-%% \ifbxpi@diaprnind
+%% switch bxpi@diaprnind
 \newbool{bxpi@diaprnind}\bxpi@diaprnindfalse
-%% \ifbxpi@prnind
+%% switch bxpi@prnind
 \newbool{bxpi@prnind}
-%% \ifbxpi@forceind
+%% switch bxpi@forceind
 \newbool{bxpi@forceind}
 %% \bxpi@choice
 \let\bxpi@choice\relax
@@ -197,7 +206,7 @@
 % and sets the switches bxpi@forceind and bxpi@prnind, then
 % sets the remaining string to \bxpi@res, which is passed to
 % the original argument parser (\@newline).
-\def\bxpi@parse@arg#1{%
+\def\bxpi@parse@arg#1{
   \bxpi@parse@arg@a#1\bxpi@end
 }
 \def\bxpi@parse@arg@a{
@@ -217,7 +226,7 @@
     \def\bxpi@res{#1}
   }
 }
-\def\bxpi@parse@arg@d#1{%
+\def\bxpi@parse@arg@d#1{
   \bxIfx{,#1}{
     \bxpi@parse@arg@a
   }{\bxIfx{!#1}{
@@ -243,6 +252,7 @@
   \futurelet\bxpi@tok\bxpi@par@hook@a
 }
 \def\bxpi@par@hook@a{
+\bxDebug{peek:\meaning\bxpi@tok}
   \bxIfx{\bxpi@tok\special}{
     \bxpi@par@hook@b
   }{%else
@@ -347,10 +357,10 @@
    \bxCsNoexpand{ifbxpi@d@lineprnind}
 }
 
-%------------------- character table
+%--------------------------------------- character table
 
-%% \bxpi@P/<char>
-\def\do#1#2{%
+%% \[bxpi@P/<char>]
+\def\do#1#2{
   \bxToUcsCharDual{"#1}{"#2}
   \cslet{bxpi@P/\bxRes}{t}
 }
@@ -377,13 +387,14 @@
 \do{301D}
 \fi
 
-%% \bxpi@DP/<char>
-\def\do#1#2{%
+%% \[bxpi@DP/<char>]
+\def\do#1#2{
   \bxToUcsCharDual{"#1}{"#2}
   \cslet{bxpi@DP/\bxRes}{t}
 }
 \do{2156}{300C}
 \do{2158}{300E}
 
-%------------------- all done
+%--------------------------------------- all done
 \endinput
+%% EOF
