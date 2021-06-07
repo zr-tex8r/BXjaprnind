@@ -286,7 +286,7 @@
   \futurelet\bxpi@tok\bxpi@prnindent@a
 }
 \def\bxpi@prnindent@a{
-  \bxIf{\@sptoken\bxpi@tok}{
+  \bxIfx{\@sptoken\bxpi@tok}{
     \bxpi@prnindent@space
   }{\bxIfCharToken\bxpi@tok{
     \bxpi@prnindent@b
