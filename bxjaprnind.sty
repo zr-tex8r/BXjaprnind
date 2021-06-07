@@ -15,14 +15,28 @@
 
 %% code guards
 \edef\bxpi@restore@codes{%
-\catcode33=\the\catcode33%<!>
-\catcode34=\the\catcode34%<">
-\catcode62=\the\catcode62%<>>
+\catcode33=\the\catcode33%
+\catcode34=\the\catcode34%
+\catcode39=\the\catcode39%
+\catcode45=\the\catcode45%
+\catcode46=\the\catcode46%
+\catcode47=\the\catcode47%
+\catcode58=\the\catcode58%
+\catcode59=\the\catcode59%
+\catcode60=\the\catcode60%
+\catcode62=\the\catcode62%
 \endlinechar=\the\endlinechar%
 \relax}%
-\catcode33=12 %
-\catcode34=12 %
-\catcode62=12 %
+\catcode33=12 % <!>
+\catcode34=12 % <">
+\catcode39=12 % <'>
+\catcode45=12 % <->
+\catcode46=12 % <.>
+\catcode47=12 % </>
+\catcode58=12 % <:>
+\catcode59=12 % <;>
+\catcode60=12 % <<>
+\catcode62=12 % <>>
 \AtEndOfPackage{%
 \bxpi@restore@codes
 \undef\bxpi@restore@codes}
@@ -34,7 +48,17 @@
 
 %% variables
 \newbool{bxpi@everyhook}
+\newbool{bxpi@force}
 \newdimen\bxpi@dima
+
+%--------------------------------------- options
+
+%% force
+\DeclareOption{force}{%
+  \bxpi@forcetrue
+}
+%% dispatch
+\ProcessOptions*
 
 %--------------------------------------- set the paragraph hook
 
@@ -61,6 +85,13 @@
   \everypar\bxpi@everypar
   \bxpi@everypar{\the\expandafter\everypar\bxpi@par@hook}%
 
+  \ifbxpi@force
+    \PackageError\bxpi@pkgname{%
+      Option 'force' is not supported because\MessageBreak
+      package 'everyhook' is not available%
+    }{\@ehc}
+    \bxpi@forcefalse
+  \fi
 \fi
 \endlinechar=-1 %
 %--------------------------------------- the newline hook
@@ -252,7 +283,7 @@
   \futurelet\bxpi@tok\bxpi@par@hook@a
 }
 \def\bxpi@par@hook@a{
-\bxDebug{peek:\meaning\bxpi@tok}
+%\bxDebug{peek:\meaning\bxpi@tok}
   \bxIfx{\bxpi@tok\special}{
     \bxpi@par@hook@b
   }{%else
@@ -395,6 +426,17 @@
 \do{2156}{300C}
 \do{2158}{300E}
 
+%--------------------------------------- 'force' option
+\ifbxpi@force
+
+%% re-attach the hook at begin-document
+\AfterEndPreamble{
+  \let\bxpi@par@hook@again\bxpi@par@hook
+  \let\bxpi@par@hook\relax
+  \PushPostHook{par}{\bxpi@par@hook@again}
+}
+
+\fi
 %--------------------------------------- all done
 \endinput
 %% EOF
