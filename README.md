@@ -52,6 +52,7 @@ See the manual bxjaprnind.pdf (in Japanese) for detail.
 Revision History
 ----------------
 
+  * Version 0.4  〈2021/06/06〉
   * Version 0.3b 〈2017/09/12〉
   * Version 0.3a 〈2013/05/05〉
   * Version 0.3  〈2013/04/29〉

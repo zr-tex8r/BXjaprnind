@@ -8,9 +8,10 @@ LaTeX: 段落頭の開き括弧類の位置の自動調整
 
 ### 対応環境
 
-  - TeX フォーマット： LaTeX
-  - TeX エンジン： pTeX／upTeX／LuaTeX（＋LuaTeX-ja）
-  - 依存パッケージ： bxtoolbox（[BXbase] バンドル）
+  * TeX フォーマット： LaTeX
+  * TeX エンジン： pTeX／upTeX／LuaTeX（＋LuaTeX-ja）
+  * 依存パッケージ：
+      - bxtoolbox（[BXbase] バンドル）
 
 [BXbase]: https://www.ctan.org/pkg/bxbase
 
@@ -18,7 +19,7 @@ LaTeX: 段落頭の開き括弧類の位置の自動調整
 
 TDS 1.1 に準拠するシステムの場合、以下のようにファイルを移動する：
 
-  - *.sty      →  $TEXMF/tex/latex/BXjaprnind
+  - `*.sty`  →  $TEXMF/tex/latex/BXjaprnind
 
 この後必要に応じて mktexlsr を実行する。
 
@@ -26,14 +27,19 @@ TDS 1.1 に準拠するシステムの場合、以下のようにファイルを
 
 本パッケージは MIT ライセンスの下で配布される。
 
+
 bxjaprnind パッケージ ― 本体
 -----------------------------
 
 詳細は解説文書 bxjaprnind.pdf を参照。
 
+
 更新履歴
 --------
 
+  * Version 0.4  〈2021/06/06〉
+      - バグ修正。
+      - `force` オプションを追加。
   * Version 0.3b 〈2017/09/12〉
       - source special 挿入への対策。
   * Version 0.3a 〈2013/05/05〉
@@ -41,7 +47,8 @@ bxjaprnind パッケージ ― 本体
   * Version 0.3  〈2013/04/29〉
       - everyhook パッケージへの依存を無くした。
   * Version 0.2  〈2012/05/14〉
+      - 最初の公開版。
 
-----------------------------------------
+--------------------
 Takayuki YATO (aka. "ZR")  
-http://zrbabbler.sp.land.to/
+https://github.com/zr-tex8r

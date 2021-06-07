@@ -1,12 +1,23 @@
 % 文字コードは UTF-8
 % lualatex で組版する（LuaTeX-ja 使用）
 \documentclass[a4paper]{ltjsarticle}
-\usepackage[ipaex]{luatexja-preset}
-\usepackage{metalogo}
+\usepackage[haranoaji]{luatexja-preset}
+\setmainfont{Harano Aji Mincho}
+\setsansfont{Harano Aji Gothic}
+\setmonofont{InconsolataN}
+\usepackage{color}
+\definecolor{myblue}{rgb}{0,0,0.75}
+\definecolor{mygreen}{rgb}{0,0.45,0}
+\usepackage[colorlinks,hyperfootnotes=false]{hyperref}
+\hypersetup{linkcolor=myblue,urlcolor=mygreen,
+  pdftitle={bxjaprnindパッケージ},
+  pdfauthor={八登崇之}}
+\usepackage{bxtexlogo}
+\bxtexlogoimport{*}
 \usepackage{shortvrb}
 \MakeShortVerb{\|}
-\newcommand{\PkgVersion}{0.3b}
-\newcommand{\PkgDate}{2017/09/12}
+\newcommand{\PkgVersion}{0.4}
+\newcommand{\PkgDate}{2021/06/06}
 \newcommand{\Pkg}[1]{\textsf{#1}}
 \newcommand{\Meta}[1]{$\langle$\mbox{}#1\mbox{}$\rangle$}
 \newcommand{\Note}{\par\noindent ※}
@@ -22,6 +33,7 @@
 
 %===========================================================
 \section{概要}
+\label{sec:Overview}
 
 以下の機能を提供する。
 \begin{itemize}
@@ -55,15 +67,25 @@
 
 %===========================================================
 \section{パッケージの読込}
+\label{sec:Loading}
 
 |\usepackage| で読み込む。
-オプションはない。
 \begin{verbatim}
-\usepackage{bxjaprnind}
+\usepackage[|\Meta{オプション}|...]{bxjaprnind}
 \end{verbatim}
+
+以下のオプションが利用できる。
+
+\begin{itemize}
+\item |force|\Means
+  本パッケージは「段落の先頭の走査」を行っているため、同様の機能を
+  もつクラス・パッケージと衝突する可能性がある。
+  |force|は、衝突時に本パッケージの機能を優先することを試みる。
+\end{itemize}
 
 %===========================================================
 \section{機能}
+\label{sec:Usage}
 
 以下の命令が提供される。
 
