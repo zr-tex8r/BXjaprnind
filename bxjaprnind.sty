@@ -10,7 +10,7 @@
 
 %% package declaration
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{bxjaprnind}[2021/06/06 v0.4]
+\ProvidesPackage{bxjaprnind}[2021/06/18 v0.4a]
 \def\bxpi@pkgname{bxjaprnind}
 
 %% code guards
@@ -199,6 +199,12 @@
 % Sets the value of \bxpi@lineheadforce.
 \bxNewrobustcmd*{\lineheadforceindentamount}[1]{
   \edef\bxpi@lineheadforce{#1}
+}
+
+%<*> \dialogueparenindentamount
+% Sets the value of \bxpi@dialogue.
+\bxNewrobustcmd*{\dialogueparenindentamount}[1]{
+  \edef\bxpi@dialogue{#1}
 }
 
 %%<*> \prnind

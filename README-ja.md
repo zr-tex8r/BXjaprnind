@@ -37,6 +37,9 @@ bxjaprnind パッケージ ― 本体
 更新履歴
 --------
 
+  * Version 0.4a 〈2021/06/18〉
+      - 手違いで `dialogueparenindentamount` の定義が欠落していたような
+        ので修正。
   * Version 0.4  〈2021/06/06〉
       - バグ修正。
       - `force` オプションを追加。
